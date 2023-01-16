@@ -1,11 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View } from "react-native";
+
+import Constants from "expo-constants";
+import image from "./assets/Images/background-image.jpg";
+import { Focus } from "./src/features/Focus";
+import { useState } from "react";
 
 export default function App() {
+  const [currentSubject, setCurrentSubject] = useState(null);
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+        {!currentSubject ? (
+          <Focus setCurrentSubject={setCurrentSubject} />
+        ) : (
+          <Text onPress={() => setCurrentSubject(null)}>{currentSubject}</Text>
+        )}
+      </ImageBackground>
     </View>
   );
 }
@@ -13,8 +23,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+  },
+  image: {
+    flex: 1,
   },
 });

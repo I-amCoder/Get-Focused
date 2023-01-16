@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "GetFocused",
-    "slug": "GetFocused",
+    "slug": "getfocused",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "454d7732-020b-46b8-ae22-3e968255e208"
+      }
+    },
+    "owner": "junaid_native"
   }
 }
