@@ -4,6 +4,7 @@ import Constants from "expo-constants";
 import image from "./assets/Images/background-image.jpg";
 import { Focus } from "./src/features/Focus";
 import { useState } from "react";
+import { Timer } from "./src/features/Timer";
 
 export default function App() {
   const [currentSubject, setCurrentSubject] = useState(null);
@@ -13,7 +14,11 @@ export default function App() {
         {!currentSubject ? (
           <Focus setCurrentSubject={setCurrentSubject} />
         ) : (
-          <Text onPress={() => setCurrentSubject(null)}>{currentSubject}</Text>
+          <Timer
+            foucsSubject={currentSubject}
+            onTimerEnd={() => {}}
+            clearSubject={() => setCurrentSubject(null)}
+          />
         )}
       </ImageBackground>
     </View>
