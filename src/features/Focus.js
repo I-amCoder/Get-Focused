@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { TextInput } from "react-native-paper";
 import { fontSizes } from "../utils/sizes";
 import { theme } from "../utils/theme";
 import { RoundedButton } from "../Components/RoundedButton";
+import image from "../../assets/logo.png";
 
 export const Focus = ({ ...props }) => {
   const [subject, setSubject] = useState(null);
@@ -14,6 +15,7 @@ export const Focus = ({ ...props }) => {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.logo} source={image} />
       <Text style={styles.header}>what do you want to foucs on?</Text>
       <View style={styles.inputBox}>
         <TextInput
@@ -37,11 +39,16 @@ export const Focus = ({ ...props }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 60,
-    padding: 20,
+    // paddingTop: 60,
+    paddingBottom: 20,
     backgroundColor: theme.white,
     opacity: 0.9,
     elevation: 34,
+  },
+  logo: {
+    justifyContent: "center",
+    width: "auto",
+    height: 200,
   },
   header: {
     fontSize: fontSizes.md,

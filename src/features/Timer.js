@@ -1,3 +1,4 @@
+import { useKeepAwake } from "expo-keep-awake";
 import React, { useState } from "react";
 import { StyleSheet, Text, Vibration, View } from "react-native";
 import { ProgressBar } from "react-native-paper";
@@ -16,25 +17,39 @@ const PATTERN = [
 ];
 
 export const Timer = ({ foucsSubject, onTimerEnd, clearSubject }) => {
+  useKeepAwake();
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
   const [minutes, setMinutes] = useState(0.1);
 
-  const handleOnEnd = () => {
+  const handleOnEnd = (reset) => {
     Vibration.vibrate(PATTERN);
-    setTimeout(() => {
-      clearSubject();
-    }, 3000);
+    onTimerEnd(foucsSubject);
+    setIsStarted(false);
+    reset();
+  };
+
+  const handleChangeTime = (time) => {
+    setMinutes(time);
+    setIsStarted(false);
   };
 
   return (
     <View style={styles.container}>
+      <View style={{ margin: 20 }}>
+        <RoundedButton
+          size={40}
+          title="⌫ "
+          textStyle={{ fontWeight: "bold", fontSize: fontSizes.md }}
+          onPress={() => clearSubject()}
+        />
+      </View>
       <View style={styles.countdown}>
         <Countdown
           isPaused={!isStarted}
           onProgress={setProgress}
           minutes={minutes}
-          onEnd={() => handleOnEnd()}
+          onEnd={handleOnEnd}
         />
       </View>
       <View style={{ padding: spacing.sm }}>
@@ -57,9 +72,10 @@ export const Timer = ({ foucsSubject, onTimerEnd, clearSubject }) => {
             setIsStarted(!isStarted);
           }}
         />
+        {/* <RoundedButton title="Reset" /> */}
       </View>
       <View style={styles.buttonWrapper}>
-        <Timings onChangeTime={setMinutes} />
+        <Timings onChangeTime={handleChangeTime} />
       </View>
     </View>
   );
@@ -77,7 +93,7 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     flex: 0.3,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
     padding: 15,
     backgroundColor: theme.darkBlue,
